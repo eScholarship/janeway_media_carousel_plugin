@@ -1,0 +1,55 @@
+{% extends "admin/core/base.html" %}
+{% load foundation %}
+{% load static %}
+
+{% block title %}Journal Homepage Settings{% endblock title %}
+{% block admin-header %}Simple Carousel Settings{% endblock admin-header %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li><a href="{% url 'core_manager_index' %}">Manager</a></li>
+    <li><a href="{% url 'home_settings_index' %}">Journal Home Settings</a></li>
+    <li>Simple Carousel Setup</li>
+{% endblock %}
+
+{% block body %}
+<h2>Simple Carousel slides</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
+
+  {% if formset.non_form_errors %}
+    <div class="callout alert">{{ formset.non_form_errors }}</div>
+  {% endif %}
+
+  <div id="slides">
+    {% for form in formset %}
+      {% include "simple_carousel/_slide_form.html" with form=form %}
+    {% endfor %}
+  </div>
+
+  <button type="button" id="add-slide" class="button secondary">Add slide</button>
+  <button type="submit" class="button success">Save</button>
+
+  {# Blank form cloned by the "Add slide" button #}
+  <template id="empty-slide">
+    {% include "simple_carousel/_slide_form.html" with form=formset.empty_form %}
+  </template>
+</form>
+{% endblock body %}
+
+{% block js %}
+<script>
+  (function () {
+    var total = document.getElementById("id_{{ formset.prefix }}-TOTAL_FORMS");
+    document.getElementById("add-slide").addEventListener("click", function () {
+      var html = document
+        .getElementById("empty-slide")
+        .innerHTML.replace(/__prefix__/g, total.value);
+      document.getElementById("slides").insertAdjacentHTML("beforeend", html);
+      total.value = parseInt(total.value, 10) + 1;
+    });
+  })();
+</script>
+{% endblock js %}

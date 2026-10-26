@@ -1,0 +1,19 @@
+<fieldset class="slide">
+  {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+  {% if form.non_field_errors %}<div class="callout alert">{{ form.non_field_errors }}</div>{% endif %}
+
+  {% for field in form.visible_fields %}
+    {% if field.name != "DELETE" %}
+      <div class="field">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        {{ field.errors }}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  {% if form.DELETE %}
+    <label>{{ form.DELETE }} Delete this slide</label>
+  {% endif %}
+</fieldset>
