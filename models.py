@@ -13,6 +13,6 @@ class SimpleCarousel(models.Model):
 class SimpleCarouselSlide(models.Model):
     carousel = models.ForeignKey("SimpleCarousel", on_delete=models.CASCADE)
     header = models.CharField(max_length=255)
-    image = models.ForeignKey("cms.MediaFile", on_delete=models.CASCADE)
+    image = models.ForeignKey("cms.MediaFile", null=True, blank=True, on_delete=models.CASCADE)
     text = models.TextField()
     order = models.PositiveIntegerField()
