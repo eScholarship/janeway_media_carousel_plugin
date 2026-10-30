@@ -3,17 +3,17 @@
 {% load static %}
 
 {% block title %}Journal Homepage Settings{% endblock title %}
-{% block admin-header %}Simple Carousel Settings{% endblock admin-header %}
+{% block admin-header %}Media Carousel Settings{% endblock admin-header %}
 
 {% block breadcrumbs %}
     {{ block.super }}
     <li><a href="{% url 'core_manager_index' %}">Manager</a></li>
     <li><a href="{% url 'home_settings_index' %}">Journal Home Settings</a></li>
-    <li>Simple Carousel Setup</li>
+    <li>Media Carousel Setup</li>
 {% endblock %}
 
 {% block body %}
-<h2>Simple Carousel slides</h2>
+<h2>Media Carousel slides</h2>
 
 <form method="post">
   {% csrf_token %}
@@ -25,7 +25,7 @@
 
   <div id="slides">
     {% for form in formset %}
-      {% include "simple_carousel/_slide_form.html" with form=form %}
+      {% include "media_carousel/_slide_form.html" with form=form %}
     {% endfor %}
   </div>
 
@@ -34,7 +34,7 @@
 
   {# Blank form cloned by the "Add slide" button #}
   <template id="empty-slide">
-    {% include "simple_carousel/_slide_form.html" with form=formset.empty_form %}
+    {% include "media_carousel/_slide_form.html" with form=formset.empty_form %}
   </template>
 </form>
 {% endblock body %}

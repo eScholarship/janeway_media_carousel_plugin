@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import BaseInlineFormSet, inlineformset_factory
 
-from .models import SimpleCarousel, SimpleCarouselSlide
+from .models import MediaCarousel, MediaCarouselSlide
 from cms.models import MediaFile
 
-class SimpleCarouselSlideForm(forms.ModelForm):
+class MediaCarouselSlideForm(forms.ModelForm):
     class Meta:
-        model = SimpleCarouselSlide
+        model = MediaCarouselSlide
         fields = ["header", "image", "text", "order"]
         widgets = {
             "text": forms.Textarea(attrs={"rows": 3}),
@@ -21,11 +21,11 @@ class SimpleCarouselSlideForm(forms.ModelForm):
         self.fields["image"].queryset = MediaFile.objects.filter(journal=journal)
 
 
-class BaseSimpleCarouselSlideFormSet(BaseInlineFormSet):
+class BaseMediaCarouselSlideFormSet(BaseInlineFormSet):
     """Slides shown in display order; new slides with no order go to the end."""
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("queryset", SimpleCarouselSlide.objects.order_by("order", "pk"))
+        kwargs.setdefault("queryset", MediaCarouselSlide.objects.order_by("order", "pk"))
         super().__init__(*args, **kwargs)
 
     def _next_order(self):
@@ -47,11 +47,11 @@ class BaseSimpleCarouselSlideFormSet(BaseInlineFormSet):
         return obj
 
 
-SimpleCarouselSlideFormSet = inlineformset_factory(
-    SimpleCarousel,
-    SimpleCarouselSlide,
-    form=SimpleCarouselSlideForm,
-    formset=BaseSimpleCarouselSlideFormSet,
+MediaCarouselSlideFormSet = inlineformset_factory(
+    MediaCarousel,
+    MediaCarouselSlide,
+    form=MediaCarouselSlideForm,
+    formset=BaseMediaCarouselSlideFormSet,
     extra=1,
     can_delete=True,
 )

@@ -4,12 +4,12 @@ from django.contrib.contenttypes.models import ContentType
 from utils.models import Plugin
 
 
-PLUGIN_NAME = 'Simple Carousel Plugin'
-DISPLAY_NAME = 'Simple Carousel'
+PLUGIN_NAME = 'Media Carousel Plugin'
+DISPLAY_NAME = 'Media Carousel'
 DESCRIPTION = 'Homepage element for a carousel similar to those in escholarship'
 AUTHOR = 'Esther Verreau'
 VERSION = '0.1'
-SHORT_NAME = 'simple_carousel'
+SHORT_NAME = 'media_carousel'
 JANEWAY_VERSION = "1.8.0"
 
 
@@ -34,11 +34,11 @@ def install():
         content_type = ContentType.objects.get_for_model(journal)
         element, created = core_models.HomepageElement.objects.get_or_create(
             name=DISPLAY_NAME,
-            template_path="simple_carousel/simple_carousel.html",
+            template_path="media_carousel/media_carousel.html",
             content_type=content_type,
             object_id=journal.pk,
             has_config=True,
-            configure_url="simple_carousel_config",
+            configure_url="media_carousel_config",
         )
         element.save()
 
@@ -49,7 +49,7 @@ def hook_registry():
         install()
         return {
             "yield_homepage_element_context": {
-                "module": "plugins.simple_carousel.hooks",
+                "module": "plugins.media_carousel.hooks",
                 "function": "yield_homepage_element_context",
                 "name": DISPLAY_NAME,
             }

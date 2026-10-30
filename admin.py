@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import SimpleCarousel, SimpleCarouselSlide
+from .models import MediaCarousel, MediaCarouselSlide
 
 
-class SimpleCarouselSlideInline(admin.TabularInline):
-    model = SimpleCarouselSlide
+class MediaCarouselSlideInline(admin.TabularInline):
+    model = MediaCarouselSlide
     extra = 1
     ordering = ("order",)
 
 
-@admin.register(SimpleCarousel)
-class SimpleCarouselAdmin(admin.ModelAdmin):
-    inlines = [SimpleCarouselSlideInline]
+@admin.register(MediaCarousel)
+class MediaCarouselAdmin(admin.ModelAdmin):
+    inlines = [MediaCarouselSlideInline]
     list_display = ("journal",)
